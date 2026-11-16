@@ -1,7 +1,7 @@
 // Regras de cálculo do "Esse frete paga?".
 // Funções puras (sem tela): fáceis de testar e de reaproveitar.
 
-import { TABELA_A, EIXOS } from "./antt-tabela-a.js";
+import { TABELA_A, EIXOS } from "./antt-tabela-a.js?v=__V__";
 
 /** Arredonda para centavos evitando erros de ponto flutuante (ex.: 1.005). */
 export function centavos(valor) {

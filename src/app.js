@@ -1,9 +1,9 @@
 // Liga a tela às regras de cálculo. O resultado é recalculado a cada digitação.
 
-import { analisarFrete } from "./calc.js";
-import { TABELA_A, TABELA_INFO, EIXOS } from "./antt-tabela-a.js";
-import { ROTA_URL } from "./config.js";
-import { textoCompartilhar, linkWhatsApp } from "./compartilhar.js";
+import { analisarFrete } from "./calc.js?v=__V__";
+import { TABELA_A, TABELA_INFO, EIXOS } from "./antt-tabela-a.js?v=__V__";
+import { ROTA_URL } from "./config.js?v=__V__";
+import { textoCompartilhar, linkWhatsApp } from "./compartilhar.js?v=__V__";
 
 // Cidades da última rota buscada (vão na mensagem do WhatsApp).
 let ultimaRota = null;
