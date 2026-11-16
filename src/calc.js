@@ -124,7 +124,12 @@ export function analisarFrete(e) {
     custos: custosArred,
     custoTotal: centavos(custoTotal),
     lucro: centavos(lucro),
-    margem: Math.round(margem * 10) / 10,
+    // arredonda "para longe do zero" também nos negativos (-7,25 → -7,3)
+    // (calculada sobre o lucro em centavos, com tolerância para sobras de ponto flutuante)
+    margem: (() => {
+      const m = (centavos(lucro) / v.freteOferecido) * 100;
+      return (Math.sign(m) * Math.round(Math.abs(m) * 10 + 1e-9)) / 10 || 0;
+    })(),
     lucroPorKm: centavos(lucro / kmTotal),
     custoPorKm: centavos(custoTotal / kmTotal),
     freteEmpate,

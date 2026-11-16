@@ -6,6 +6,16 @@
   <title>Esse frete paga? — calculadora de lucro do frete</title>
   <meta name="description" content="Descubra antes de aceitar a carga se o frete dá lucro: diesel, pedágio, desgaste, volta vazia e piso mínimo da ANTT." />
   <meta name="theme-color" content="#23272d" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Esse frete paga?" />
+  <meta property="og:description" content="Descubra antes de aceitar a carga se o frete dá lucro: diesel, pedágio, volta vazia e piso mínimo da ANTT." />
+  <meta property="og:url" content="https://rodrigolotti.github.io/esse-frete-paga/" />
+  <meta property="og:image" content="https://rodrigolotti.github.io/esse-frete-paga/docs/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Placa vermelha 'Não paga' com prejuízo de R$ 750,00 e placa verde 'Paga'" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d7a45'/%3E%3Crect x='7' y='7' width='86' height='86' rx='12' fill='none' stroke='white' stroke-width='5'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ER$%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -108,6 +118,7 @@
         <div class="placa-borda">
           <p class="placa-titulo" id="vereditoTitulo">Preencha o frete e a distância</p>
           <p class="placa-sub" id="vereditoSub">A resposta aparece aqui enquanto você digita.</p>
+          <button type="button" class="botao-placa" id="verExemplo">Ver um exemplo</button>
           <div class="placa-numeros" id="placaNumeros" hidden>
             <div><span class="rotulo">Lucro</span><strong id="lucro"></strong></div>
             <div><span class="rotulo">Margem</span><strong id="margem"></strong></div>
@@ -115,6 +126,11 @@
           </div>
         </div>
       </div>
+
+      <a id="whatsapp" class="whatsapp" href="#" target="_blank" rel="noopener" hidden>
+        <svg viewBox="0 0 32 32" aria-hidden="true" width="24" height="24"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3c.2.2 2.2 3.4 5.4 4.7 2 .9 2.8.9 3.8.8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4Z"/></svg>
+        Mandar no WhatsApp
+      </a>
 
       <p id="erro" class="erro" role="alert" hidden></p>
 

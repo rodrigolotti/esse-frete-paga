@@ -107,3 +107,10 @@ test("centavos arredonda corretamente", () => {
   assert.equal(centavos(1.005), 1.01);
   assert.equal(centavos(2.675), 2.68);
 });
+
+test("margem negativa arredonda para longe do zero: -232/3200 = -7,25% → -7,3", () => {
+  const r = analisarFrete({ ...base, freteOferecido: 3200, precoDieselL: 7.33, pedagio: 0,
+    despesasViagem: 0, taxasPercentual: 0 });
+  assert.equal(r.lucro, -232);
+  assert.equal(r.margem, -7.3);
+});

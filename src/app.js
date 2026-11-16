@@ -3,6 +3,10 @@
 import { analisarFrete } from "./calc.js";
 import { TABELA_A, TABELA_INFO, EIXOS } from "./antt-tabela-a.js";
 import { ROTA_URL } from "./config.js";
+import { textoCompartilhar, linkWhatsApp } from "./compartilhar.js";
+
+// Cidades da última rota buscada (vão na mensagem do WhatsApp).
+let ultimaRota = null;
 
 const $ = (id) => document.getElementById(id);
 const form = $("form");
@@ -93,6 +97,8 @@ function vazio(mensagemErro) {
   placa("vazia", "Preencha o frete e a distância", "A resposta aparece aqui enquanto você digita.");
   $("placaNumeros").hidden = true;
   $("detalhes").hidden = true;
+  $("whatsapp").hidden = true;
+  $("verExemplo").hidden = false;
   $("erro").hidden = !mensagemErro;
   $("erro").textContent = mensagemErro || "";
 }
@@ -178,15 +184,23 @@ function calcular() {
   const [titulo, sub] = TEXTO[r.veredito];
   placa(r.veredito, titulo, sub);
   $("placaNumeros").hidden = false;
+  $("verExemplo").hidden = true;
+  const w = $("whatsapp");
+  w.href = linkWhatsApp(textoCompartilhar(r, d, ultimaRota));
+  w.hidden = false;
   $("lucro").textContent = brl(r.lucro);
   $("margem").textContent = `${num1.format(r.margem)}%`;
   $("lucroPorKm").textContent = brl(r.lucroPorKm);
 
   desenharPiso(r, d);
   desenharBarra(r, d);
-  $("freteEmpate").textContent = brl(r.freteEmpate);
   $("margemAlvo").textContent = `${num1.format(d.margemDesejada)}%`;
-  $("freteParaMargem").textContent = r.freteParaMargem == null ? "impossível com essas taxas" : brl(r.freteParaMargem);
+  const pisoValor = r.piso ? r.piso.piso : 0;
+  const fpm = $("freteParaMargem");
+  if (r.freteParaMargem == null) fpm.textContent = "impossível com essas taxas";
+  else if (pisoValor > r.freteParaMargem) fpm.innerHTML = `${brl(pisoValor)}<small>o piso da ANTT é maior</small>`;
+  else fpm.textContent = brl(r.freteParaMargem);
+  $("freteEmpate").textContent = brl(r.freteEmpate);
   $("detalhes").hidden = false;
 }
 
@@ -217,6 +231,7 @@ async function buscarRota() {
     if ($("voltaIgual").checked) form.elements.voltaVaziaKm.value = dados.distanciaKm;
     const tempo = Number.isFinite(dados.duracaoHoras) ? `, cerca de ${num1.format(dados.duracaoHoras)} h de direção` : "";
     const curto = (n) => String(n || "").replace(/,\s*(Brazil|Brasil)$/i, "");
+    ultimaRota = { de: curto(dados.origem.nome), para: curto(dados.destino.nome) };
     statusRota(`${curto(dados.origem.nome)} → ${curto(dados.destino.nome)}: ${num1.format(dados.distanciaKm)} km${tempo}. Confira se as cidades estão certas.`);
     calcular();
   } catch (e) {
@@ -235,6 +250,22 @@ if (ROTA_URL) {
     });
   }
 }
+
+// Se a pessoa mudar a distância à mão, as cidades da busca deixam de valer.
+form.elements.distanciaKm.addEventListener("input", () => { ultimaRota = null; });
+
+// Exemplo para quem chega pela primeira vez: um frete que parece bom e não paga.
+$("verExemplo").addEventListener("click", () => {
+  form.elements.freteOferecido.value = "3200";
+  form.elements.distanciaKm.value = "500";
+  form.elements.voltaVaziaKm.value = "500";
+  ultimaRota = null;
+  calcular();
+  const naoPaga = $("placa").classList.contains("nao-paga");
+  $("vereditoSub").textContent = naoPaga
+    ? "Exemplo: R$ 3.200 por 500 km, voltando vazio. Parece bom, mas não cobre os custos. Troque pelos seus números."
+    : "Exemplo: R$ 3.200 por 500 km, voltando vazio. Troque pelos seus números.";
+});
 
 form.addEventListener("input", calcular);
 form.addEventListener("change", calcular);
