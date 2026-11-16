@@ -216,7 +216,8 @@ async function buscarRota() {
     form.elements.distanciaKm.value = dados.distanciaKm;
     if ($("voltaIgual").checked) form.elements.voltaVaziaKm.value = dados.distanciaKm;
     const tempo = Number.isFinite(dados.duracaoHoras) ? `, cerca de ${num1.format(dados.duracaoHoras)} h de direção` : "";
-    statusRota(`${dados.origem.nome} → ${dados.destino.nome}: ${num1.format(dados.distanciaKm)} km${tempo}. Confira se as cidades estão certas.`);
+    const curto = (n) => String(n || "").replace(/,\s*(Brazil|Brasil)$/i, "");
+    statusRota(`${curto(dados.origem.nome)} → ${curto(dados.destino.nome)}: ${num1.format(dados.distanciaKm)} km${tempo}. Confira se as cidades estão certas.`);
     calcular();
   } catch (e) {
     statusRota(e.message, true);
