@@ -4,11 +4,19 @@ Calculadora para caminhoneiros autônomos e pequenas transportadoras descobrirem
 
 Ela busca a distância de caminhão entre as cidades e soma diesel, pedágios, manutenção, volta vazia, despesas de viagem, impostos e comissão. Depois responde **Paga / Paga pouco / Não paga** e compara o valor oferecido com o **piso mínimo da ANTT**.
 
-<img src="docs/tela-resultado.png" alt="Tela do resultado no celular" width="320" />
+<img src="docs/tela-resultado.png" alt="Tela do site com o caminhão na estrada e a placa vermelha Não paga" width="720" />
 
 ## Por que existe
 
 Muitos autônomos aceitam frete olhando só o valor bruto. Diesel, desgaste e principalmente a **volta vazia** comem o lucro, e às vezes a viagem dá prejuízo. As calculadoras que existem mostram só o piso da ANTT. Esta mostra **quanto sobra para você** e **qual frete pedir**.
+
+## Destaques
+
+- **Placa de estrada como resposta**: verde (paga), amarela (paga pouco), vermelha (não paga), atualizada enquanto você digita
+- **Distância automática**: digite as cidades e a rota de caminhão é calculada
+- **Mandar no WhatsApp**: o resultado vai pronto para o grupo, com quanto pedir
+- **Funciona como app e sem internet**: instale no celular; na estrada, sem sinal, a conta continua funcionando
+- **Nunca sugere frete abaixo do piso da ANTT**
 
 ## O que ela calcula
 
@@ -53,6 +61,10 @@ src/calc.js           regras de cálculo (funções puras, testadas)
 src/antt-tabela-a.js  coeficientes da ANTT, com a fonte
 src/app.js            liga a tela ao cálculo; salva os custos no aparelho
 src/config.js         endereço do worker de rotas (vazio = busca desligada)
+src/compartilhar.js   mensagem pronta para o WhatsApp
+sw.js                 modo offline (guarda o site no celular)
+manifest.webmanifest  nome e ícones do app instalado
+icones/               ícones do app
 worker/worker.js      worker da Cloudflare: esconde a chave e calcula a rota
 worker/LEIA-ME.md     como configurar a busca de rota
 tests/                testes do cálculo e do worker (com o serviço simulado)
@@ -66,7 +78,7 @@ tests/                testes do cálculo e do worker (com o serviço simulado)
 - [ ] Preço médio do diesel por estado (dados da ANP)
 - [ ] Tabelas B, C e D da ANTT e retorno vazio obrigatório
 - [ ] Histórico de fretes calculados e comparação entre ofertas
-- [ ] Funcionar offline e instalar como app (PWA)
+- [x] Funcionar offline e instalar como app (PWA)
 
 ## Licença
 

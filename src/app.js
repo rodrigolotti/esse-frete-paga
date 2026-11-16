@@ -235,7 +235,9 @@ async function buscarRota() {
     statusRota(`${curto(dados.origem.nome)} → ${curto(dados.destino.nome)}: ${num1.format(dados.distanciaKm)} km${tempo}. Confira se as cidades estão certas.`);
     calcular();
   } catch (e) {
-    statusRota(e.message, true);
+    // "Failed to fetch" e afins = sem conexão: explica em português
+    const semRede = !navigator.onLine || e instanceof TypeError;
+    statusRota(semRede ? "Sem internet agora. Digite a distância à mão; o resto da conta funciona offline." : e.message, true);
   } finally {
     botao.disabled = false;
   }
@@ -271,3 +273,22 @@ form.addEventListener("input", calcular);
 form.addEventListener("change", calcular);
 form.addEventListener("submit", (e) => { e.preventDefault(); calcular(); });
 calcular();
+
+// --- app instalável e offline ------------------------------------------------
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").catch(() => { /* segue sem offline */ });
+}
+let pedidoInstalar = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  pedidoInstalar = e;
+  $("instalar").hidden = false;
+});
+$("instalar").addEventListener("click", async () => {
+  if (!pedidoInstalar) return;
+  pedidoInstalar.prompt();
+  await pedidoInstalar.userChoice.catch(() => null);
+  pedidoInstalar = null;
+  $("instalar").hidden = true;
+});
+window.addEventListener("appinstalled", () => { $("instalar").hidden = true; });

@@ -37,7 +37,7 @@ h1, h2, p { margin: 0; }
 .pista-conteudo {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem 3.25rem;
+  padding: 2.5rem 1.25rem 0;
 }
 .pista h1 {
   font-weight: 900;
@@ -52,18 +52,46 @@ h1, h2, p { margin: 0; }
   line-height: 1.45;
   color: #c9ced4;
 }
-/* Faixa tracejada que "pinta" a pista ao abrir a página */
+/* A estrada: o caminhão entra pela esquerda e para; a faixa continua
+   passando, como se ele seguisse viagem. */
+.estrada {
+  position: relative;
+  height: clamp(130px, 22vw, 210px);
+  margin-top: -1rem;
+  background: linear-gradient(180deg, transparent 0 62%, #1b1e23 62% 100%);
+}
+.caminhao-wrap {
+  position: absolute;
+  right: max(1.25rem, calc((100% - 1120px) / 2 + 1.25rem));
+  bottom: 24px;
+  width: min(620px, 94%);
+  animation: entrar 1.8s cubic-bezier(.16,.84,.3,1) .15s both;
+  z-index: 1;
+}
+.caminhao { display: block; width: 100%; height: auto; overflow: visible; }
+.caminhao .giro {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: girar .55s linear infinite;
+}
+.caminhao .facho { animation: piscar 1.8s ease-out .15s both; }
+@keyframes entrar { from { transform: translateX(-130vw); } to { transform: none; } }
+@keyframes girar { to { transform: rotate(360deg); } }
+@keyframes piscar { 0%, 80% { opacity: 0; } 85% { opacity: 1; } 90% { opacity: .3; } 100% { opacity: 1; } }
+
+/* Faixa tracejada: é "pintada" ao abrir a página e depois corre devagar */
 .faixa {
   position: absolute;
   left: 0;
-  bottom: 1.1rem;
-  height: 8px;
+  bottom: 8px;
+  height: 7px;
   width: 100%;
   background: repeating-linear-gradient(90deg, var(--faixa) 0 56px, transparent 56px 96px);
   transform-origin: left;
-  animation: pintar 1.1s cubic-bezier(.2,.7,.2,1) both;
+  animation: pintar 1.1s cubic-bezier(.2,.7,.2,1) both, correr 1.1s linear 1.1s infinite;
 }
 @keyframes pintar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes correr { from { background-position: 0 0; } to { background-position: -96px 0; } }
 
 /* ---------- painel ---------- */
 .painel {
@@ -354,10 +382,26 @@ label.marcar input { width: 22px; height: 22px; min-height: 0; accent-color: var
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .faixa, .placa.mudou { animation: none; }
+  .faixa, .placa.mudou, .caminhao-wrap, .caminhao .giro, .caminhao .facho { animation: none; }
   .placa { transition: none; }
 }
 
 /* valores em reais nunca quebram linha (o "-" ficava sozinho) */
 .placa-numeros strong, .legenda li b, .pedir dd, .total strong { white-space: nowrap; }
 .pedir dd small { display: block; font-size: 0.8rem; font-weight: 600; color: var(--suave); text-align: right; }
+
+/* botão "instalar" no topo (só aparece quando o navegador permite instalar) */
+.instalar {
+  margin-top: 1.1rem;
+  font: inherit;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 2px solid var(--faixa);
+  background: transparent;
+  color: var(--faixa);
+  cursor: pointer;
+}
+.instalar:hover { background: rgba(245,196,0,.12); }
+.instalar:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
