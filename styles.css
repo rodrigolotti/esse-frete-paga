@@ -152,6 +152,41 @@ input::placeholder { color: #a7adb3; font-weight: 400; }
 input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
+/* ---------- busca de rota ---------- */
+.rota {
+  margin-top: 1rem;
+  padding: 0.25rem 1rem 1rem;
+  border-radius: 8px;
+  background: #f3f5f6;
+  border-left: 5px solid var(--placa);
+}
+label.marcar {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--tinta);
+  font-weight: 600;
+}
+label.marcar input { width: 22px; height: 22px; min-height: 0; accent-color: var(--placa); }
+.botao-rota {
+  margin-top: 0.9rem;
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--placa);
+  color: #fff;
+  cursor: pointer;
+}
+.botao-rota:focus-visible { outline: 3px solid var(--faixa); outline-offset: 2px; }
+.botao-rota[disabled] { opacity: .6; cursor: progress; }
+.rota-status { margin-top: 0.6rem; font-size: 0.95rem; line-height: 1.4; min-height: 1.4em; }
+.rota-status.erro-rota { color: var(--pare); font-weight: 600; }
+.atalho { font-size: 0.88rem; font-weight: 600; color: var(--placa); }
+
 /* ---------- a placa de resultado ---------- */
 .resultado { position: sticky; top: 1rem; }
 @media (max-width: 860px) { .resultado { position: static; } }

@@ -30,6 +30,22 @@
             <input name="freteOferecido" type="number" inputmode="decimal" min="0" step="0.01" placeholder="4.200" required />
           </span>
         </label>
+        <div class="rota" id="rota" hidden>
+          <div class="dupla">
+            <label>Saindo de
+              <input name="origem" id="origem" type="text" autocomplete="off" placeholder="Campinas, SP" data-fora-do-calculo />
+            </label>
+            <label>Indo para
+              <input name="destino" id="destino" type="text" autocomplete="off" placeholder="Curitiba, PR" data-fora-do-calculo />
+            </label>
+          </div>
+          <label class="marcar">
+            <input type="checkbox" id="voltaIgual" data-fora-do-calculo checked />
+            Volto vazio pelo mesmo caminho
+          </label>
+          <button type="button" id="buscarRota" class="botao-rota">Buscar distância</button>
+          <p class="rota-status" id="rotaStatus" role="status"></p>
+        </div>
         <div class="dupla">
           <label>Distância carregado
             <span class="campo sufixo" data-sufixo="km"><input name="distanciaKm" type="number" inputmode="decimal" min="0" placeholder="500" required /></span>
@@ -62,6 +78,7 @@
         <div class="dupla">
           <label>Pedágios da viagem
             <span class="campo prefixo" data-prefixo="R$"><input name="pedagio" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
+            <a class="atalho" id="consultarPedagio" href="https://qualp.com.br/" target="_blank" rel="noopener">Consultar pedágio no QualP</a>
           </label>
           <label>Manutenção e pneus
             <span class="campo sufixo" data-sufixo="R$/km"><input name="manutencaoPorKm" type="number" inputmode="decimal" min="0" step="0.01" value="0.50" /></span>

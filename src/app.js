@@ -2,6 +2,7 @@
 
 import { analisarFrete } from "./calc.js";
 import { TABELA_A, TABELA_INFO, EIXOS } from "./antt-tabela-a.js";
+import { ROTA_URL } from "./config.js";
 
 const $ = (id) => document.getElementById(id);
 const form = $("form");
@@ -59,7 +60,7 @@ function salvar(d) {
 function ler() {
   const d = {};
   for (const el of form.elements) {
-    if (!el.name) continue;
+    if (!el.name || "foraDoCalculo" in el.dataset) continue;
     if (el.tagName === "SELECT") d[el.name] = el.value;
     else d[el.name] = el.value.trim() === "" ? (el.required ? NaN : 0) : Number(el.value.replace(",", "."));
   }
@@ -187,6 +188,51 @@ function calcular() {
   $("margemAlvo").textContent = `${num1.format(d.margemDesejada)}%`;
   $("freteParaMargem").textContent = r.freteParaMargem == null ? "impossível com essas taxas" : brl(r.freteParaMargem);
   $("detalhes").hidden = false;
+}
+
+// --- busca de rota por endereço (só aparece se o worker estiver configurado) ---
+function statusRota(texto, erro = false) {
+  const s = $("rotaStatus");
+  s.textContent = texto;
+  s.classList.toggle("erro-rota", erro);
+}
+
+async function buscarRota() {
+  const de = $("origem").value.trim();
+  const para = $("destino").value.trim();
+  if (de.length < 3 || para.length < 3) {
+    return statusRota("Escreva a cidade de saída e a de destino, com o estado (ex.: Campinas, SP).", true);
+  }
+  const botao = $("buscarRota");
+  botao.disabled = true;
+  statusRota("Calculando a rota de caminhão…");
+  try {
+    const url = `${ROTA_URL.replace(/\/$/, "")}/rota?de=${encodeURIComponent(de)}&para=${encodeURIComponent(para)}`;
+    const resp = await fetch(url);
+    const dados = await resp.json().catch(() => ({}));
+    if (!resp.ok || !Number.isFinite(dados.distanciaKm)) {
+      throw new Error(dados.erro || "Não consegui calcular a rota agora. Digite a distância à mão.");
+    }
+    form.elements.distanciaKm.value = dados.distanciaKm;
+    if ($("voltaIgual").checked) form.elements.voltaVaziaKm.value = dados.distanciaKm;
+    const tempo = Number.isFinite(dados.duracaoHoras) ? `, cerca de ${num1.format(dados.duracaoHoras)} h de direção` : "";
+    statusRota(`${dados.origem.nome} → ${dados.destino.nome}: ${num1.format(dados.distanciaKm)} km${tempo}. Confira se as cidades estão certas.`);
+    calcular();
+  } catch (e) {
+    statusRota(e.message, true);
+  } finally {
+    botao.disabled = false;
+  }
+}
+
+if (ROTA_URL) {
+  $("rota").hidden = false;
+  $("buscarRota").addEventListener("click", buscarRota);
+  for (const id of ["origem", "destino"]) {
+    $(id).addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); buscarRota(); }
+    });
+  }
 }
 
 form.addEventListener("input", calcular);

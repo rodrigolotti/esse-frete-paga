@@ -2,7 +2,7 @@
 
 Calculadora para caminhoneiros autônomos e pequenas transportadoras descobrirem, **antes de aceitar a carga**, se um frete dá lucro.
 
-Ela soma diesel, pedágios, manutenção, volta vazia, despesas de viagem, impostos e comissão. Depois responde **Paga / Paga pouco / Não paga** e compara o valor oferecido com o **piso mínimo da ANTT**.
+Ela busca a distância de caminhão entre as cidades e soma diesel, pedágios, manutenção, volta vazia, despesas de viagem, impostos e comissão. Depois responde **Paga / Paga pouco / Não paga** e compara o valor oferecido com o **piso mínimo da ANTT**.
 
 <img src="docs/tela-resultado.png" alt="Tela do resultado no celular" width="320" />
 
@@ -52,13 +52,17 @@ styles.css            visual (pensado para celular)
 src/calc.js           regras de cálculo (funções puras, testadas)
 src/antt-tabela-a.js  coeficientes da ANTT, com a fonte
 src/app.js            liga a tela ao cálculo; salva os custos no aparelho
-tests/calc.test.js    testes com resultados conferidos à mão
+src/config.js         endereço do worker de rotas (vazio = busca desligada)
+worker/worker.js      worker da Cloudflare: esconde a chave e calcula a rota
+worker/LEIA-ME.md     como configurar a busca de rota
+tests/                testes do cálculo e do worker (com o serviço simulado)
 .github/workflows/    roda os testes e publica no GitHub Pages
 ```
 
 ## Próximos passos
 
-- [ ] Distância e pedágio automáticos a partir de origem e destino
+- [x] Distância automática a partir de origem e destino ([como configurar](worker/LEIA-ME.md))
+- [ ] Pedágio automático por eixo (depende de uma API paga)
 - [ ] Preço médio do diesel por estado (dados da ANP)
 - [ ] Tabelas B, C e D da ANTT e retorno vazio obrigatório
 - [ ] Histórico de fretes calculados e comparação entre ofertas
