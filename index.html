@@ -4,30 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Esse frete paga? — calculadora de lucro do frete</title>
-  <meta name="description" content="Descubra em segundos se um frete dá lucro: diesel, pedágio, desgaste, volta vazia e comparação com o piso mínimo da ANTT." />
-  <meta name="theme-color" content="#14213d" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2314213d'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23fca311' font-family='Arial' font-weight='bold'%3E$%3C/text%3E%3C/svg%3E" />
+  <meta name="description" content="Descubra antes de aceitar a carga se o frete dá lucro: diesel, pedágio, desgaste, volta vazia e piso mínimo da ANTT." />
+  <meta name="theme-color" content="#23272d" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d7a45'/%3E%3Crect x='7' y='7' width='86' height='86' rx='12' fill='none' stroke='white' stroke-width='5'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ER$%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topo">
-    <h1>Esse frete paga?</h1>
-    <p>Coloque os números da viagem e veja se sobra dinheiro no fim.</p>
+  <header class="pista">
+    <div class="pista-conteudo">
+      <h1>Esse frete paga?</h1>
+      <p>Coloque os números da viagem. A conta aparece na hora, antes de você aceitar a carga.</p>
+    </div>
+    <div class="faixa" aria-hidden="true"></div>
   </header>
 
-  <main>
+  <main class="painel">
     <form id="form" novalidate>
-      <fieldset>
-        <legend>A viagem</legend>
-        <label>Frete oferecido (R$)
-          <input name="freteOferecido" type="number" inputmode="decimal" min="0" step="0.01" placeholder="ex.: 4200" required />
+      <section class="bloco viagem">
+        <h2>A viagem</h2>
+        <label class="destaque">Quanto estão pagando pelo frete?
+          <span class="campo prefixo" data-prefixo="R$">
+            <input name="freteOferecido" type="number" inputmode="decimal" min="0" step="0.01" placeholder="4.200" required />
+          </span>
         </label>
         <div class="dupla">
-          <label>Distância carregado (km)
-            <input name="distanciaKm" type="number" inputmode="decimal" min="0" placeholder="ex.: 500" required />
+          <label>Distância carregado
+            <span class="campo sufixo" data-sufixo="km"><input name="distanciaKm" type="number" inputmode="decimal" min="0" placeholder="500" required /></span>
           </label>
-          <label>Volta vazia (km)
-            <input name="voltaVaziaKm" type="number" inputmode="decimal" min="0" value="0" />
+          <label>Volta vazia
+            <span class="campo sufixo" data-sufixo="km"><input name="voltaVaziaKm" type="number" inputmode="decimal" min="0" value="0" /></span>
           </label>
         </div>
         <div class="dupla">
@@ -38,76 +46,86 @@
             <select name="eixos" id="eixos"></select>
           </label>
         </div>
-      </fieldset>
+      </section>
 
-      <fieldset>
-        <legend>Seus custos <small>(ficam salvos neste aparelho)</small></legend>
+      <section class="bloco custos">
+        <h2>Seus custos</h2>
+        <p class="nota">Ficam salvos neste aparelho. Os valores iniciais são exemplos: troque pelos do seu caminhão.</p>
         <div class="dupla">
-          <label>Consumo (km/L)
-            <input name="consumoKmL" type="number" inputmode="decimal" min="0" step="0.1" value="2.5" required />
+          <label>Consumo
+            <span class="campo sufixo" data-sufixo="km/L"><input name="consumoKmL" type="number" inputmode="decimal" min="0" step="0.1" value="2.5" required /></span>
           </label>
-          <label>Diesel (R$/L)
-            <input name="precoDieselL" type="number" inputmode="decimal" min="0" step="0.01" value="7.33" required />
+          <label>Diesel
+            <span class="campo sufixo" data-sufixo="R$/L"><input name="precoDieselL" type="number" inputmode="decimal" min="0" step="0.01" value="7.33" required /></span>
           </label>
         </div>
         <div class="dupla">
-          <label>Pedágios (R$ total)
-            <input name="pedagio" type="number" inputmode="decimal" min="0" step="0.01" value="0" />
+          <label>Pedágios da viagem
+            <span class="campo prefixo" data-prefixo="R$"><input name="pedagio" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
           </label>
-          <label>Manutenção e pneus (R$/km)
-            <input name="manutencaoPorKm" type="number" inputmode="decimal" min="0" step="0.01" value="0.50" />
-          </label>
-        </div>
-        <div class="dupla">
-          <label>Alimentação, pernoite, chapa (R$)
-            <input name="despesasViagem" type="number" inputmode="decimal" min="0" step="0.01" value="0" />
-          </label>
-          <label>Outros custos (R$)
-            <input name="outrosCustos" type="number" inputmode="decimal" min="0" step="0.01" value="0" />
+          <label>Manutenção e pneus
+            <span class="campo sufixo" data-sufixo="R$/km"><input name="manutencaoPorKm" type="number" inputmode="decimal" min="0" step="0.01" value="0.50" /></span>
           </label>
         </div>
         <div class="dupla">
-          <label>Impostos + comissão (% do frete)
-            <input name="taxasPercentual" type="number" inputmode="decimal" min="0" max="99" step="0.1" value="0" />
+          <label>Comida, pernoite, chapa
+            <span class="campo prefixo" data-prefixo="R$"><input name="despesasViagem" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
           </label>
-          <label>Lucro mínimo que você aceita (%)
-            <input name="margemDesejada" type="number" inputmode="decimal" min="0" max="99" step="1" value="15" />
+          <label>Outros custos
+            <span class="campo prefixo" data-prefixo="R$"><input name="outrosCustos" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
           </label>
         </div>
-        <p class="dica">Os valores iniciais são só exemplos. Troque pelos números do seu caminhão.</p>
-      </fieldset>
-
-      <button type="submit">Calcular</button>
-      <p id="erro" class="erro" role="alert" hidden></p>
+        <div class="dupla">
+          <label>Impostos e comissão
+            <span class="campo sufixo" data-sufixo="% do frete"><input name="taxasPercentual" type="number" inputmode="decimal" min="0" max="99" step="0.1" value="0" /></span>
+          </label>
+          <label>Lucro mínimo que você aceita
+            <span class="campo sufixo" data-sufixo="%"><input name="margemDesejada" type="number" inputmode="decimal" min="0" max="99" step="1" value="15" /></span>
+          </label>
+        </div>
+      </section>
     </form>
 
-    <section id="resultado" aria-live="polite" hidden>
-      <div id="veredito" class="veredito"></div>
-      <dl class="numeros">
-        <div><dt>Lucro</dt><dd id="lucro"></dd></div>
-        <div><dt>Margem</dt><dd id="margem"></dd></div>
-        <div><dt>Lucro por km rodado</dt><dd id="lucroPorKm"></dd></div>
-        <div><dt>Custo por km rodado</dt><dd id="custoPorKm"></dd></div>
-      </dl>
-
-      <div class="cartao" id="piso"></div>
-
-      <div class="cartao">
-        <h2>Para valer a pena</h2>
-        <p>Frete para não ter prejuízo: <strong id="freteEmpate"></strong></p>
-        <p>Frete para ter <span id="margemAlvo"></span> de lucro: <strong id="freteParaMargem"></strong></p>
+    <aside class="resultado" aria-live="polite">
+      <div id="placa" class="placa vazia">
+        <div class="placa-borda">
+          <p class="placa-titulo" id="vereditoTitulo">Preencha o frete e a distância</p>
+          <p class="placa-sub" id="vereditoSub">A resposta aparece aqui enquanto você digita.</p>
+          <div class="placa-numeros" id="placaNumeros" hidden>
+            <div><span class="rotulo">Lucro</span><strong id="lucro"></strong></div>
+            <div><span class="rotulo">Margem</span><strong id="margem"></strong></div>
+            <div><span class="rotulo">Por km rodado</span><strong id="lucroPorKm"></strong></div>
+          </div>
+        </div>
       </div>
 
-      <div class="cartao">
-        <h2>Para onde vai o dinheiro</h2>
-        <table id="tabelaCustos"><tbody></tbody></table>
+      <p id="erro" class="erro" role="alert" hidden></p>
+
+      <div id="detalhes" hidden>
+        <div id="piso" class="aviso"></div>
+
+        <section class="bloco compacto">
+          <h2>Para onde vai o dinheiro</h2>
+          <div class="barra" id="barra" role="img"></div>
+          <ul class="legenda" id="legenda"></ul>
+          <p class="total">Custo total <strong id="custoTotal"></strong> <span id="custoPorKm"></span></p>
+        </section>
+
+        <section class="bloco compacto">
+          <h2>Quanto pedir</h2>
+          <dl class="pedir">
+            <div><dt>Para não ter prejuízo</dt><dd id="freteEmpate"></dd></div>
+            <div><dt>Para ter <span id="margemAlvo"></span> de lucro</dt><dd id="freteParaMargem"></dd></div>
+          </dl>
+        </section>
       </div>
-    </section>
+    </aside>
   </main>
 
-  <footer>
+  <footer class="rodape">
     <p id="fonte"></p>
-    <p>Ferramenta de estimativa. O piso usa a Tabela A da ANTT (carga lotação) e só a distância de ida. Para fechar contrato, confira na <a href="https://calculadorafrete.antt.gov.br/" rel="noopener" target="_blank">calculadora oficial da ANTT</a>.</p>
+    <p>É uma estimativa para negociar. O piso usa a Tabela A da ANTT (carga lotação) e só a distância de ida. Para fechar contrato, confira na <a href="https://calculadorafrete.antt.gov.br/" rel="noopener" target="_blank">calculadora oficial da ANTT</a>.</p>
+    <p class="parachoque">Frete bom é o que paga a volta.</p>
   </footer>
 
   <script type="module" src="src/app.js"></script>
