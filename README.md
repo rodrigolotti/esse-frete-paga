@@ -4,7 +4,7 @@ Calculadora para caminhoneiros autônomos e pequenas transportadoras descobrirem
 
 Ela busca a distância de caminhão entre as cidades e soma diesel, pedágios, manutenção, volta vazia, despesas de viagem, impostos e comissão. Depois responde **Paga / Paga pouco / Não paga** e compara o valor oferecido com o **piso mínimo da ANTT**.
 
-<img src="docs/tela-resultado.png" alt="Tela do site com o caminhão na estrada e a placa vermelha Não paga" width="720" />
+<img src="docs/tela-resultado.jpg" alt="Tela do site com a foto de uma carreta na rodovia ao entardecer" width="720" />
 
 ## Por que existe
 
