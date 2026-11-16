@@ -26,95 +26,18 @@
 </head>
 <body>
   <header class="pista">
+    <img class="foto-topo" alt="" fetchpriority="high"
+         src="https://images.unsplash.com/photo-1745956983820-6e960f7e8472?w=1600&q=60&auto=format&fit=crop"
+         srcset="https://images.unsplash.com/photo-1745956983820-6e960f7e8472?w=800&q=60&auto=format&fit=crop 800w,
+                 https://images.unsplash.com/photo-1745956983820-6e960f7e8472?w=1600&q=60&auto=format&fit=crop 1600w,
+                 https://images.unsplash.com/photo-1745956983820-6e960f7e8472?w=2400&q=55&auto=format&fit=crop 2400w"
+         sizes="100vw" />
     <div class="pista-conteudo">
       <h1>Esse frete paga?</h1>
       <p>Coloque os números da viagem. A conta aparece na hora, antes de você aceitar a carga.</p>
       <button type="button" class="instalar" id="instalar" hidden>Instalar no celular: funciona sem internet</button>
     </div>
-    <div class="estrada">
-      <div class="caminhao-wrap">
-        <svg class="caminhao" viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Caminhão com a carreta escrita Esse frete paga?">
-  <defs>
-    <linearGradient id="farol" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stop-color="#fff6c2" stop-opacity=".75"/>
-      <stop offset="1" stop-color="#fff6c2" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="vidro" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#5d7383"/>
-      <stop offset=".55" stop-color="#1b2128"/>
-      <stop offset="1" stop-color="#0f1216"/>
-    </linearGradient>
-    <linearGradient id="lataria" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#d9dde1"/>
-    </linearGradient>
-    <linearGradient id="cabine" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#2f6b4f"/>
-      <stop offset="1" stop-color="#0d7a45"/>
-    </linearGradient>
-  </defs>
-
-  <!-- facho do farol -->
-  <polygon class="facho" points="584,118 760,84 760,168 584,128" fill="url(#farol)"/>
-
-  <!-- sombra no asfalto -->
-  <ellipse cx="300" cy="172" rx="290" ry="9" fill="#000" opacity=".35"/>
-
-  <!-- carreta -->
-  <rect x="14" y="30" width="388" height="112" rx="7" fill="url(#lataria)"/>
-  <rect x="14" y="30" width="388" height="112" rx="7" fill="none" stroke="#b4bbc2" stroke-width="2"/>
-  <!-- frisos da carreta -->
-  <g stroke="#c9ced4" stroke-width="2">
-    <line x1="110" y1="34" x2="110" y2="138"/><line x1="206" y1="34" x2="206" y2="138"/><line x1="302" y1="34" x2="302" y2="138"/>
-  </g>
-  <!-- marca na lateral -->
-  <rect x="34" y="52" width="348" height="58" rx="4" fill="#23272d"/>
-  <text x="208" y="92" text-anchor="middle" fill="#fff" font-family="Overpass, 'Inter Display', Inter, sans-serif" font-weight="900" font-size="34" letter-spacing="-1">Esse frete paga?</text>
-  <!-- faixa refletiva (amarela, como nas carretas) -->
-  <rect x="14" y="128" width="388" height="8" fill="#f5c400"/>
-  <g fill="#23272d"><rect x="40" y="128" width="22" height="8"/><rect x="104" y="128" width="22" height="8"/><rect x="168" y="128" width="22" height="8"/><rect x="232" y="128" width="22" height="8"/><rect x="296" y="128" width="22" height="8"/><rect x="360" y="128" width="22" height="8"/></g>
-  <!-- saia aerodinâmica -->
-  <path d="M176 142 L392 142 L392 154 Q392 158 388 158 L184 158 Q176 158 176 150 Z" fill="#b4bbc2"/>
-  <!-- lanterna traseira -->
-  <rect x="10" y="118" width="6" height="14" rx="2" fill="#ff3b30"/>
-
-  <!-- chassi e engate -->
-  <rect x="380" y="138" width="200" height="10" rx="3" fill="#15181c"/>
-  <rect x="402" y="132" width="20" height="8" fill="#15181c"/>
-
-  <!-- cabine aerodinâmica -->
-  <path d="M428 142 L428 52 Q428 24 456 22 L520 20 Q548 20 560 46 L586 104 Q592 116 592 128 L592 142 Z" fill="url(#cabine)"/>
-  <!-- defletor de ar no teto -->
-  <path d="M432 30 Q440 6 470 4 L520 4 Q534 4 536 20 L456 22 Q440 24 432 30 Z" fill="#0b5a34"/>
-  <!-- para-brisa -->
-  <path d="M528 30 L552 32 Q560 34 564 44 L584 96 L528 96 Z" fill="url(#vidro)"/>
-  <path d="M524 22 L556 26 Q562 28 562 36 L524 32 Z" fill="#0b5a34"/>
-  <!-- janela lateral -->
-  <rect x="470" y="36" width="46" height="46" rx="6" fill="url(#vidro)"/>
-  <!-- porta -->
-  <path d="M462 34 L462 124 L522 124 L522 98" fill="none" stroke="#0b5a34" stroke-width="2.5"/>
-  <!-- friso de luz LED -->
-  <rect class="led" x="436" y="108" width="150" height="4" rx="2" fill="#f5c400"/>
-  <!-- farol -->
-  <rect x="578" y="116" width="14" height="8" rx="2" fill="#fff6c2"/>
-  <!-- para-choque -->
-  <rect x="560" y="130" width="34" height="12" rx="3" fill="#15181c"/>
-  <!-- escada -->
-  <rect x="526" y="126" width="30" height="5" rx="2" fill="#15181c"/>
-
-  <!-- rodas -->
-  <g class="rodas">
-    <g transform="translate(64 156)"><g class="giro"><circle r="19" fill="#15181c"/><circle r="9" fill="#8a939c"/><circle r="12.5" fill="none" stroke="#f5c400" stroke-width="2" stroke-dasharray="5 6"/></g></g>
-    <g transform="translate(106 156)"><g class="giro"><circle r="19" fill="#15181c"/><circle r="9" fill="#8a939c"/><circle r="12.5" fill="none" stroke="#f5c400" stroke-width="2" stroke-dasharray="5 6"/></g></g>
-    <g transform="translate(148 156)"><g class="giro"><circle r="19" fill="#15181c"/><circle r="9" fill="#8a939c"/><circle r="12.5" fill="none" stroke="#f5c400" stroke-width="2" stroke-dasharray="5 6"/></g></g>
-    <g transform="translate(440 156)"><g class="giro"><circle r="19" fill="#15181c"/><circle r="9" fill="#8a939c"/><circle r="12.5" fill="none" stroke="#f5c400" stroke-width="2" stroke-dasharray="5 6"/></g></g>
-    <g transform="translate(482 156)"><g class="giro"><circle r="19" fill="#15181c"/><circle r="9" fill="#8a939c"/><circle r="12.5" fill="none" stroke="#f5c400" stroke-width="2" stroke-dasharray="5 6"/></g></g>
-    <g transform="translate(556 156)"><g class="giro"><circle r="19" fill="#15181c"/><circle r="9" fill="#8a939c"/><circle r="12.5" fill="none" stroke="#f5c400" stroke-width="2" stroke-dasharray="5 6"/></g></g>
-  </g>
-</svg>
-      </div>
-      <div class="faixa" aria-hidden="true"></div>
-    </div>
+    <div class="faixa" aria-hidden="true"></div>
   </header>
 
   <main class="painel">
@@ -245,6 +168,7 @@
     <p id="fonte"></p>
     <p>É uma estimativa para negociar. O piso usa a Tabela A da ANTT (carga lotação) e só a distância de ida. Para fechar contrato, confira na <a href="https://calculadorafrete.antt.gov.br/" rel="noopener" target="_blank">calculadora oficial da ANTT</a>.</p>
     <p class="parachoque">Frete bom é o que paga a volta.</p>
+    <p class="credito">Foto do topo: <a href="https://unsplash.com/photos/trucks-drive-on-a-highway-at-sunset-qms-kprAgJM" target="_blank" rel="noopener">Vitalii Onyshchuk / Unsplash</a></p>
   </footer>
 
   <script type="module" src="src/app.js?v=__V__"></script>

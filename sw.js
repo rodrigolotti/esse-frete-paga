@@ -33,8 +33,26 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   const req = e.request;
+  if (req.method !== "GET") return;
+  const url = new URL(req.url);
+
+  // Foto do topo (Unsplash): guarda uma cópia para o site abrir bonito offline.
+  if (url.hostname === "images.unsplash.com") {
+    e.respondWith(
+      caches.match(req).then((guardado) =>
+        guardado ||
+        fetch(req).then((resp) => {
+          const copia = resp.clone();
+          caches.open(CACHE).then((c) => c.put(req, copia));
+          return resp;
+        })
+      )
+    );
+    return;
+  }
+
   // só cuida dos arquivos do próprio site; a busca de rota (outro endereço) passa direto
-  if (req.method !== "GET" || new URL(req.url).origin !== self.location.origin) return;
+  if (url.origin !== self.location.origin) return;
 
   e.respondWith(
     fetch(req)
