@@ -33,7 +33,7 @@ h1, h2, p { margin: 0; }
   background: var(--asfalto);
   color: #fff;
   overflow: hidden;
-  min-height: clamp(380px, 48vw, 560px);
+  min-height: clamp(310px, 48vw, 560px);
   display: flex;
   align-items: flex-start;
 }
