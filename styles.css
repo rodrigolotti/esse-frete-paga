@@ -406,3 +406,20 @@ label.marcar input { width: 22px; height: 22px; min-height: 0; accent-color: var
 .instalar:hover { background: rgba(245,196,0,.12); }
 .instalar:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
 .credito { margin-top: 0.4rem; font-size: 0.78rem; }
+
+/* bloco de pedágio dentro da viagem */
+.pedagios { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--linha); }
+.pedagios h3 { font-size: 1.05rem; font-weight: 800; }
+.pedagios .dupla label:first-child { margin-top: 0.6rem; }
+.pedagios .dupla label { margin-top: 0.6rem; }
+.pedagios .nota a { font-size: inherit; }
+.aviso-vale {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  background: var(--alerta);
+  color: var(--tinta);
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}

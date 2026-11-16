@@ -38,7 +38,12 @@ function exigir(condicao, mensagem) {
  *  freteOferecido     valor oferecido pelo frete
  *  consumoKmL         consumo médio do caminhão
  *  precoDieselL       preço que você paga no diesel
- *  pedagio            total de pedágios da viagem (ida + volta)
+ *  pedagioIda         pedágio no caminho carregado (origem → destino)
+ *  valePedagio        true se o contratante paga o pedágio da ida à parte
+ *                     (vale-pedágio obrigatório, Lei 10.209/2001): aí ele
+ *                     não sai do frete
+ *  pedagioVolta       pedágio na volta vazia (sempre por conta do motorista)
+ *  pedagio            (antigo) total de pedágio pago pelo motorista
  *  manutencaoPorKm    pneus, óleo, peças e desgaste por km rodado
  *  despesasViagem     alimentação, pernoite, chapa etc.
  *  outrosCustos       qualquer outro custo da viagem
@@ -50,6 +55,9 @@ export function analisarFrete(e) {
   const v = {
     voltaVaziaKm: 0,
     pedagio: 0,
+    pedagioIda: 0,
+    pedagioVolta: 0,
+    valePedagio: false,
     manutencaoPorKm: 0,
     despesasViagem: 0,
     outrosCustos: 0,
@@ -65,6 +73,8 @@ export function analisarFrete(e) {
   for (const campo of [
     "voltaVaziaKm",
     "pedagio",
+    "pedagioIda",
+    "pedagioVolta",
     "manutencaoPorKm",
     "despesasViagem",
     "outrosCustos",
@@ -80,7 +90,8 @@ export function analisarFrete(e) {
 
   const custos = {
     diesel: litros * v.precoDieselL,
-    pedagio: v.pedagio,
+    // O pedágio da ida só é custo do motorista se o contratante NÃO pagar o vale-pedágio.
+    pedagio: v.pedagio + (v.valePedagio ? 0 : v.pedagioIda) + v.pedagioVolta,
     manutencao: kmTotal * v.manutencaoPorKm,
     despesasViagem: v.despesasViagem,
     outrosCustos: v.outrosCustos,
@@ -136,5 +147,9 @@ export function analisarFrete(e) {
     freteParaMargem,
     piso,
     abaixoDoPiso: piso ? v.freteOferecido < piso.piso : null,
+    // pedágio da ida que fica por conta do contratante (informativo, não é custo)
+    pedagioContratante: v.valePedagio ? centavos(v.pedagioIda) : 0,
+    // pedágio da ida que o contratante deveria pagar e não está pagando
+    pedagioIdaSemVale: !v.valePedagio && v.pedagioIda > 0,
   };
 }

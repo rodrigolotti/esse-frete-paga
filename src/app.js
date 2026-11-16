@@ -28,7 +28,7 @@ const brl = (v) => (v == null ? "—" : reais.format(v));
 // Ordem, nome e cor de cada custo na barra
 const CUSTOS = [
   ["diesel", "Diesel", "#23272d"],
-  ["pedagio", "Pedágios", "#5b636c"],
+  ["pedagio", "Pedágio por sua conta", "#5b636c"],
   ["manutencao", "Manutenção e pneus", "#8a939c"],
   ["despesasViagem", "Comida, pernoite, chapa", "#b4bbc2"],
   ["outrosCustos", "Outros custos", "#d3d7db"],
@@ -65,7 +65,8 @@ function ler() {
   const d = {};
   for (const el of form.elements) {
     if (!el.name || "foraDoCalculo" in el.dataset) continue;
-    if (el.tagName === "SELECT") d[el.name] = el.value;
+    if (el.type === "checkbox") d[el.name] = el.checked;
+    else if (el.tagName === "SELECT") d[el.name] = el.value;
     else d[el.name] = el.value.trim() === "" ? (el.required ? NaN : 0) : Number(el.value.replace(",", "."));
   }
   d.eixos = Number(d.eixos);
@@ -158,6 +159,12 @@ function desenharBarra(r, d) {
     legenda.append(li);
   }
 
+  if (r.pedagioContratante > 0) {
+    const li = document.createElement("li");
+    li.innerHTML = `<i style="background:#fff;border:2px solid var(--linha)"></i>Pedágio da ida: pago pelo contratante, não sai do frete<b>${brl(r.pedagioContratante)}</b>`;
+    legenda.append(li);
+  }
+
   barra.setAttribute(
     "aria-label",
     `Frete de ${brl(d.freteOferecido)} contra custo total de ${brl(r.custoTotal)}; resultado ${brl(r.lucro)}.`
@@ -180,6 +187,7 @@ function calcular() {
   }
   salvar(d);
   $("erro").hidden = true;
+  $("avisoVale").hidden = !r.pedagioIdaSemVale;
 
   const [titulo, sub] = TEXTO[r.veredito];
   placa(r.veredito, titulo, sub);

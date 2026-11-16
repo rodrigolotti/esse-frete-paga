@@ -114,3 +114,26 @@ test("margem negativa arredonda para longe do zero: -232/3200 = -7,25% → -7,3"
   assert.equal(r.lucro, -232);
   assert.equal(r.margem, -7.3);
 });
+
+test("vale-pedágio: pedágio da ida pago pelo contratante não sai do frete; volta vazia sai", () => {
+  const sem = { ...base, pedagio: 0, freteOferecido: 5000 };
+  const r = analisarFrete({ ...sem, pedagioIda: 300, valePedagio: true, pedagioVolta: 120 });
+  assert.equal(r.custos.pedagio, 120);
+  assert.equal(r.pedagioContratante, 300);
+  assert.equal(r.pedagioIdaSemVale, false);
+  // custo = diesel 2.600 + pedágio 120 + manutenção 500 + despesas 150 + taxas 500
+  assert.equal(r.custoTotal, 3870);
+});
+
+test("sem vale-pedágio: a ida vira custo do motorista e o site sinaliza", () => {
+  const sem = { ...base, pedagio: 0, freteOferecido: 5000 };
+  const r = analisarFrete({ ...sem, pedagioIda: 300, valePedagio: false, pedagioVolta: 120 });
+  assert.equal(r.custos.pedagio, 420);
+  assert.equal(r.pedagioContratante, 0);
+  assert.equal(r.pedagioIdaSemVale, true);
+  assert.equal(r.custoTotal, 4170);
+});
+
+test("pedágio negativo é recusado", () => {
+  assert.throws(() => analisarFrete({ ...base, freteOferecido: 1000, pedagioVolta: -1 }), /negativo/);
+});

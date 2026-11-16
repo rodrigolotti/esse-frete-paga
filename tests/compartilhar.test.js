@@ -52,3 +52,10 @@ test("nunca sugere pedir menos que o piso da ANTT", () => {
   assert.match(t, /👉 Peça pelo menos R\$ 4\.071,76 \(piso da ANTT\)/);
   assert.match(t, /📉 Prejuízo: R\$ 232,00 \(-7,3%\)/);
 });
+
+test("mensagem informa o vale-pedágio pago pelo contratante", () => {
+  const d = { ...base, pedagio: 0, pedagioIda: 300, valePedagio: true, freteOferecido: 5000 };
+  assert.match(textoCompartilhar(analisarFrete(d), d), /🎫 Pedágio da ida \(R\$ 300,00\) pago à parte pelo contratante/);
+  const s = { ...d, valePedagio: false };
+  assert.match(textoCompartilhar(analisarFrete(s), s), /⚖️ Sem vale-pedágio/);
+});

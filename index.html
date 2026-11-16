@@ -81,6 +81,24 @@
             <select name="eixos" id="eixos"></select>
           </label>
         </div>
+
+        <div class="pedagios">
+          <h3>Pedágio</h3>
+          <div class="dupla">
+            <label>Na ida (carregado)
+              <span class="campo prefixo" data-prefixo="R$"><input name="pedagioIda" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
+            </label>
+            <label>Na volta vazia
+              <span class="campo prefixo" data-prefixo="R$"><input name="pedagioVolta" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
+            </label>
+          </div>
+          <label class="marcar">
+            <input type="checkbox" name="valePedagio" id="valePedagio" checked />
+            O contratante paga o pedágio da ida à parte (vale-pedágio)
+          </label>
+          <p class="aviso-vale" id="avisoVale" hidden>Sem vale-pedágio, o pedágio da ida sai do seu frete. A lei obriga quem contrata a pagar esse pedágio à parte, antes da viagem (Lei 10.209/2001).</p>
+          <p class="nota">O pedágio da volta vazia é sempre por sua conta. Vazio, eixo suspenso não paga. Valores por eixo no <a class="atalho" id="consultarPedagio" href="https://qualp.com.br/" target="_blank" rel="noopener">QualP</a>.</p>
+        </div>
       </section>
 
       <section class="bloco custos">
@@ -95,12 +113,11 @@
           </label>
         </div>
         <div class="dupla">
-          <label>Pedágios da viagem
-            <span class="campo prefixo" data-prefixo="R$"><input name="pedagio" type="number" inputmode="decimal" min="0" step="0.01" value="0" /></span>
-            <a class="atalho" id="consultarPedagio" href="https://qualp.com.br/" target="_blank" rel="noopener">Consultar pedágio no QualP</a>
-          </label>
           <label>Manutenção e pneus
             <span class="campo sufixo" data-sufixo="R$/km"><input name="manutencaoPorKm" type="number" inputmode="decimal" min="0" step="0.01" value="0.50" /></span>
+          </label>
+          <label>Impostos e comissão
+            <span class="campo sufixo" data-sufixo="% do frete"><input name="taxasPercentual" type="number" inputmode="decimal" min="0" max="99" step="0.1" value="0" /></span>
           </label>
         </div>
         <div class="dupla">
@@ -112,9 +129,6 @@
           </label>
         </div>
         <div class="dupla">
-          <label>Impostos e comissão
-            <span class="campo sufixo" data-sufixo="% do frete"><input name="taxasPercentual" type="number" inputmode="decimal" min="0" max="99" step="0.1" value="0" /></span>
-          </label>
           <label>Lucro mínimo que você aceita
             <span class="campo sufixo" data-sufixo="%"><input name="margemDesejada" type="number" inputmode="decimal" min="0" max="99" step="1" value="15" /></span>
           </label>

@@ -17,12 +17,14 @@ Muitos autônomos aceitam frete olhando só o valor bruto. Diesel, desgaste e pr
 - **Mandar no WhatsApp**: o resultado vai pronto para o grupo, com quanto pedir
 - **Funciona como app e sem internet**: instale no celular; na estrada, sem sinal, a conta continua funcionando
 - **Nunca sugere frete abaixo do piso da ANTT**
+- **Vale-pedágio**: separa o pedágio da ida (pago à parte pelo contratante) do pedágio da volta vazia
 
 ## O que ela calcula
 
 | Resultado | Como |
 | --- | --- |
-| Custo da viagem | diesel (km total ÷ consumo × preço) + pedágio + manutenção/km + despesas + outros + % de impostos e comissão |
+| Custo da viagem | diesel (km total ÷ consumo × preço) + pedágio por conta do motorista + manutenção/km + despesas + outros + % de impostos e comissão |
+| Pedágio | a **volta vazia** é sempre custo do motorista; a **ida** só entra no custo se o contratante não pagar o vale-pedágio, que é obrigatório por lei ([Lei 10.209/2001](https://www.planalto.gov.br/ccivil_03/leis/leis_2001/l10209.htm)) |
 | Lucro e margem | frete − custo total; lucro ÷ frete |
 | Lucro e custo por km | divididos pelo km total (carregado + vazio) |
 | Frete para não ter prejuízo | custos sem taxas ÷ (1 − taxas%) |

@@ -25,6 +25,8 @@ export function textoCompartilhar(r, d, rota) {
   linhas.push(rota && rota.de && rota.para ? `📍 ${rota.de} → ${rota.para} (${km})` : `📍 ${km}`);
   linhas.push(`💰 Frete: ${brl(d.freteOferecido)}`);
   linhas.push(`⛽ Custo da viagem: ${brl(r.custoTotal)}`);
+  if (r.pedagioContratante > 0) linhas.push(`🎫 Pedágio da ida (${brl(r.pedagioContratante)}) pago à parte pelo contratante`);
+  if (r.pedagioIdaSemVale) linhas.push("⚖️ Sem vale-pedágio: por lei, o pedágio da ida é pago à parte pelo contratante");
   linhas.push(`${r.lucro >= 0 ? "📈 Lucro" : "📉 Prejuízo"}: ${brl(Math.abs(r.lucro))} (${num1.format(r.margem)}%)`);
   if (r.abaixoDoPiso) linhas.push(`🚫 Abaixo do piso da ANTT (${brl(r.piso.piso)})`);
   if (r.veredito !== "paga" && r.freteParaMargem != null) {
